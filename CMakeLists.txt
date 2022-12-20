@@ -1,0 +1,29 @@
+cmake_minimum_required(VERSION 3.13)
+
+project(NazwaProjektu)
+
+include(ExternalProject)
+
+if(NOT CMAKE_BUILD_TYPE)
+	set(CMAKE_BUILD_TYPE Release)
+endif()
+
+if(NOT DEFINED CMAKE_BUILD_WITH_INSTALL_RPATH)
+	set(CMAKE_BUILD_WITH_INSTALL_RPATH true)
+endif()
+
+if(NOT DEFINED CMAKE_INSTALL_RPATH)
+	set(CMAKE_INSTALL_RPATH $ORIGIN)
+endif()
+
+if(NOT DEFINED CMAKE_LIBRARY_OUTPUT_DIRECTORY)
+	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+endif()
+
+if(NOT DEFINED CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+endif()
+
+add_subdirectory(ext/raylib)
+
+add_subdirectory(src)
