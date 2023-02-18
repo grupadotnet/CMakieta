@@ -4,8 +4,8 @@ project(NazwaProjektu)
 
 include(ExternalProject)
 
-if(NOT CMAKE_BUILD_TYPE)
-	set(CMAKE_BUILD_TYPE Release)
+if(DEFINED CMAKE_BUILD_TYPE AND NOT CMAKE_BUILD_TYPE)
+	set_property(CACHE CMAKE_BUILD_TYPE PROPERTY VALUE Release)
 endif()
 
 if(NOT DEFINED CMAKE_BUILD_WITH_INSTALL_RPATH)

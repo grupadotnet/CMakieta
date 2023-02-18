@@ -99,11 +99,11 @@ Jest to hierarchicznie najwyższy katalog, odpowiadający całemu repozytorium. 
 	Ładuje moduł ExternalProject, który może być wykorzystywany, aby konfigurować łączenie z projektem bibliotek niewykorzystujących CMake. Chociaż żadna taka biblioteka nie jest wykorzystywana w tym projekcie, to nic nie szkodzi, aby ten moduł był ładowany - przypominał, że można go zastosować, gdy się jakaś przytrafi :)
 	
 	```cmake
-	if(NOT CMAKE_BUILD_TYPE)
-		set(CMAKE_BUILD_TYPE Release)
+	if(DEFINED CMAKE_BUILD_TYPE AND NOT CMAKE_BUILD_TYPE)
+		set_property(CACHE CMAKE_BUILD_TYPE PROPERTY VALUE Release)
 	endif()
 	```
-	Ustawia domyślne budowanie produkcyjnej wersji kodu (Release), wykorzystującej domyślnie parametry kompilatora `-O3 -DNDEBUG`, jeżeli przy konfiguracji użytkownik nie ustawi inaczej. Do innych opcji należą: Debug z parametrami `-g`, RelWithDebInfo z parametrami `-O2 -g -DNDEBUG` i MinSizeRel z parametrami `-Os -DNDEBUG`. Do sprawdzenia ustawienia zmiennej `${CMAKE_BUILD_TYPE}` stosuje się warunek `NOT`, a nie `NOT DEFINED` jak w następnych liniach, ponieważ jest ona domyślnie zdefiniowana, ale na ciąg pusty, sprowadzający się do fałszu.
+	Ustawia domyślne budowanie produkcyjnej wersji kodu (Release), wykorzystującej domyślnie parametry kompilatora `-O3 -DNDEBUG`, jeżeli przy konfiguracji użytkownik nie ustawi inaczej. Do innych opcji należą: Debug z parametrami `-g`, RelWithDebInfo z parametrami `-O2 -g -DNDEBUG` i MinSizeRel z parametrami `-Os -DNDEBUG`. Do sprawdzenia ustawienia zmiennej `${CMAKE_BUILD_TYPE}` stosuje się warunek `NOT`, a nie `NOT DEFINED` jak w następnych liniach, ponieważ jest ona domyślnie zdefiniowana, ale na ciąg pusty, sprowadzający się do fałszu. Aby zapamiętać to ustawienie w cache, tak, aby było widoczne np. w CMake GUI, wykorzystywana jest zamiast funkcji `set` odpowiednio sformułowana funkcja `set_property`.
 	
 	```cmake
 	if(NOT DEFINED CMAKE_BUILD_WITH_INSTALL_RPATH)
@@ -167,14 +167,14 @@ Jest to hierarchicznie najwyższy katalog, odpowiadający całemu repozytorium. 
 		Ustawia zmienną `${TARGET_NAME}`, która będzie oznaczała nazwę wyjściowego pliku, na nazwę projektu. Dzięki temu, jeżeli zechcemy nadać plikowi wyjściowemu nazwę inną od nazwy projektu (np. celem utworzenia kilku różnych plików wyjściowych), ustawić ją będzie trzeba tylko w jednym miejscu.
 		
 		```cmake
-		file(GLOB_RECURSE src CONFIGURE_DEPENDS "*.c" "*.cpp")
+		file(GLOB_RECURSE src CONFIGURE_DEPENDS "*.c" "*.cpp" "*.h" "*.hpp")
 		```
-		Ładuje do zmiennej `${src}` ciąg nazw wszystkich plików źródłowych .c oraz .cpp w katalogu oraz jego podkatalogach. Flaga `CONFIGURE_DEPENDS` próbuje śledzić zmiany na liście plików przed każdą kompilacją - bez niej, CMake mógłby nie zauważyć nowych plików.
+		Ładuje do zmiennej `${src}` ciąg nazw wszystkich plików źródłowych .c oraz .cpp, a także nagłówków .h i .hpp, w katalogu oraz jego podkatalogach. Flaga `CONFIGURE_DEPENDS` próbuje śledzić zmiany na liście plików przed każdą kompilacją - bez niej, CMake mógłby nie zauważyć nowych plików.
 		
 		```cmake
 		add_executable(${TARGET_NAME} ${src})
 		```
-		Żąda utworzenia pliku wykonywalnego o nazwie ze zmiennej `${TARGET_NAME}`, używając plików źródłowych zawartych w zmiennej `${src}`.
+		Żąda utworzenia pliku wykonywalnego o nazwie ze zmiennej `${TARGET_NAME}`, używając plików źródłowych zawartych w zmiennej `${src}`. Nagłówki są wykrywane po rozszerzeniu i nie są przekazywane kompilatorowi, ale dzięki ich zamieszczeniu, mogą być wyświetlone jako elementy projektu przez obsługujące środowisko CMake edytory kodu.
 		
 		```cmake
 		target_link_libraries(${TARGET_NAME} raylib)

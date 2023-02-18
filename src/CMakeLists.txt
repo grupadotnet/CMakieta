@@ -1,6 +1,6 @@
 set(TARGET_NAME ${CMAKE_PROJECT_NAME})
 
-file(GLOB_RECURSE src CONFIGURE_DEPENDS "*.c" "*.cpp")
+file(GLOB_RECURSE src CONFIGURE_DEPENDS "*.c" "*.cpp" "*.h" "*.hpp")
 
 add_executable(${TARGET_NAME} ${src})
 
