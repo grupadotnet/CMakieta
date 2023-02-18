@@ -135,7 +135,7 @@ Jest to hierarchicznie najwyższy katalog, odpowiadający całemu repozytorium. 
 	```cmake
 	add_subdirectory(src)
 	```
-	Uruchamia plik CMakeListx.txt, znajdujący się w katalogu `src`. Skonfiguruje on plik wyjściowy tego projektu, który ze względu na kolejność wywołania funkcji będzie następny do zbudowania po bibliotece raylib. Jest to nieco szerzej omówione niżej.
+	Uruchamia plik CMakeLists.txt, znajdujący się w katalogu `src`. Skonfiguruje on plik wyjściowy tego projektu, który ze względu na kolejność wywołania funkcji będzie następny do zbudowania po bibliotece raylib. Jest to nieco szerzej omówione niżej.
 
 - #### [:page_facing_up: LICENSE](LICENSE)
 	
