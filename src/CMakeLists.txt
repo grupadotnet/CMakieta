@@ -1,4 +1,4 @@
-set(TARGET_NAME ${CMAKE_PROJECT_NAME})
+set(TARGET_NAME ${PROJECT_NAME})
 
 file(GLOB_RECURSE src CONFIGURE_DEPENDS "*.c" "*.cpp" "*.h" "*.hpp")
 

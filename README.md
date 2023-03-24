@@ -91,7 +91,7 @@ Jest to hierarchicznie najwyższy katalog, odpowiadający całemu repozytorium. 
 	```cmake
 	project(NazwaProjektu)
 	```
-	Definiuje projekt o podanej nazwie. Nazwa ta jest później dostępna pod zmienną `${CMAKE_PROJECT_NAME}`.
+	Definiuje projekt o podanej nazwie. Nazwa ta jest później dostępna pod zmienną `${PROJECT_NAME}`.
 	
 	```cmake
 	include(ExternalProject)
@@ -162,9 +162,9 @@ Jest to hierarchicznie najwyższy katalog, odpowiadający całemu repozytorium. 
 		**Zawartość**
 		
 		```cmake
-		set(TARGET_NAME ${CMAKE_PROJECT_NAME})
+		set(TARGET_NAME ${PROJECT_NAME})
 		```
-		Ustawia zmienną `${TARGET_NAME}`, która będzie oznaczała nazwę wyjściowego pliku, na nazwę projektu. Dzięki temu, jeżeli zechcemy nadać plikowi wyjściowemu nazwę inną od nazwy projektu (np. celem utworzenia kilku różnych plików wyjściowych), ustawić ją będzie trzeba tylko w jednym miejscu.
+		Ustawia zmienną `${TARGET_NAME}`, która będzie oznaczała nazwę wyjściowego pliku, na nazwę projektu z ostatniego wywołania `project()`. Dzięki temu, jeżeli zechcemy nadać plikowi wyjściowemu nazwę inną od nazwy projektu (np. celem utworzenia kilku różnych plików wyjściowych), ustawić ją będzie trzeba tylko w jednym miejscu.
 		
 		```cmake
 		file(GLOB_RECURSE src CONFIGURE_DEPENDS "*.c" "*.cpp" "*.h" "*.hpp")
