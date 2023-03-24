@@ -41,7 +41,7 @@ Ponadto repozytorium próbuje wprowadzić w prostej, praktycznej formie do wybra
 	
 	**Uwaga 2:** Aby budować przy użyciu wielu wątków w programie `make` należy użyć opcji `-jn`, gdzie `n` to liczba wątków, które powinny być utworzone. Częstą praktyką jest wykorzystanie jako `n` liczby wątków albo rdzeni procesora + 1 (np. `make -j5` dla procesora czterordzeniowego): dodatkowy wątek może wykonywać pracę w trakcie przerwy w działaniu jednego z pozostałych.
 
-	**Uwaga 3:** Istnieje także możliwość wykorzystania w miejsce programu `make` bardziej zoptymalizowanego `ninja`, jednak trzeba go najpierw zainstalować. Wówczas wywołanie komendy `cmake ..` zastępuje `cmake -G Ninja ..`, natomiast wywołanie `make` komenda `ninja`.
+	**Uwaga 3:** Istnieje także możliwość wykorzystania w miejsce programu `make` bardziej zoptymalizowanego `ninja`, jednak [trzeba go najpierw zainstalować](https://ninja-build.org/). Wówczas wywołanie komendy `cmake ..` zastępuje `cmake -G Ninja ..`, natomiast wywołanie `make` komenda `ninja`.
 	
 	Generalnie, budowa projektu po jego wygenerowaniu w kroku poprzedzającym powinna już być intuicyjna dla osoby obeznanej w obsłudze programu, pod który nastąpiła generacja. Na przykład, generator Visual Studio utworzy plik rozwiązania projektu .sln, który można otworzyć w programie Visual Studio, aby pracować z projektem i kompilować go. To właśnie tego rodzaju uniwersalność, niwelująca konieczność zmian w centralnym repozytorium projektu dla obsługi wielu narzędzi, uczyniła środowisko CMake tak popularnym :)
 	
