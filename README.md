@@ -37,10 +37,14 @@ Ponadto repozytorium próbuje wprowadzić w prostej, praktycznej formie do wybra
 
 5. O ile wszystko opisane powyżej się udało, pliki pozwalające na kompilację projektu powinny być gotowe. Sposób uruchomienia kompilacji zależy od wybranego jawnie lub domyślnie w kroku 4 generatora: w zalecanym przypadku, gdy jest to generator uniksowy, wystarczy w katalogu budowania wywołać komendę `make`. Wywołanie tej komendy jest odtąd jedynym, co należy zrobić, aby zbudować projekt ustawiony w krokach 1-4.
 	
-	**Uwaga:** MinGW na platformie Windows często zamiast `make` zapewnia ekwiwalentną komendę `mingw32-make`. Wówczas to jej można użyć do skompilowania projektu.
+	**Uwaga:** MinGW na platformie Windows często zamiast `make` zapewnia ekwiwalentną komendę `mingw32-make`. Wówczas to jej można użyć do skompilowania projektu, a komenda `make` może nie być dostępna.
+	
+	**Uwaga 2:** Aby budować przy użyciu wielu wątków w programie `make` należy użyć opcji `-jn`, gdzie `n` to liczba wątków, które powinny być utworzone. Częstą praktyką jest wykorzystanie jako `n` liczby wątków albo rdzeni procesora + 1 (np. `make -j5` dla procesora czterordzeniowego): dodatkowy wątek może wykonywać pracę w trakcie przerwy w działaniu jednego z pozostałych.
+
+	**Uwaga 3:** Istnieje także możliwość wykorzystania w miejsce programu `make` bardziej zoptymalizowanego `ninja`, jednak trzeba go najpierw zainstalować. Wówczas wywołanie komendy `cmake ..` zastępuje `cmake -G Ninja ..`, natomiast wywołanie `make` komenda `ninja`.
 	
 	Generalnie, budowa projektu po jego wygenerowaniu w kroku poprzedzającym powinna już być intuicyjna dla osoby obeznanej w obsłudze programu, pod który nastąpiła generacja. Na przykład, generator Visual Studio utworzy plik rozwiązania projektu .sln, który można otworzyć w programie Visual Studio, aby pracować z projektem i kompilować go. To właśnie tego rodzaju uniwersalność, niwelująca konieczność zmian w centralnym repozytorium projektu dla obsługi wielu narzędzi, uczyniła środowisko CMake tak popularnym :)
-
+	
 6. Rezultatem wykonania powyższych kroków powinno być pojawienie się gotowego programu w podkatalogu `bin` katalogu budowania...
 	
 	Który to program można uruchomić:
