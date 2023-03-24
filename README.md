@@ -91,7 +91,9 @@ Jest to hierarchicznie najwyższy katalog, odpowiadający całemu repozytorium. 
 	```cmake
 	project(NazwaProjektu)
 	```
-	Definiuje projekt o podanej nazwie. Nazwa ta jest później dostępna pod zmienną `${PROJECT_NAME}`.
+	Definiuje projekt o podanej nazwie. Nazwa ta jest w tym projekcie dostępna pod zmienną `${PROJECT_NAME}`. Wybrane inne parametry tego projektu są także dostępne pod zmiennymi z prefiksem `PROJECT_`, na przykład: `${PROJECT_SOURCE_DIR}` - ścieżka do katalogu zawierającego plik `CMakeLists.txt` tworzący projekt, jak i `${PROJECT_BINARY_DIR}` - ścieżka do katalogu, gdzie domyślnie trafiają wyjściowe pliki.
+	
+	**Uwaga:** [${CMAKE_PROJECT_NAME} i podobne to nie to samo, mogą zwracać najwyższy w hierarchii projekt!](https://jeremimucha.com/2021/02/cmake-variable-guidelines/)
 	
 	```cmake
 	include(ExternalProject)
@@ -118,14 +120,14 @@ Jest to hierarchicznie najwyższy katalog, odpowiadający całemu repozytorium. 
 	
 	```cmake
 	if(NOT DEFINED CMAKE_LIBRARY_OUTPUT_DIRECTORY)
-		set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+		set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 	endif()
 	
 	if(NOT DEFINED CMAKE_RUNTIME_OUTPUT_DIRECTORY)
-		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 	endif()
 	```
-	Ustawia domyślny eksport bibliotek dynamicznych oraz plików wykonywalnych do katalogu `bin` wewnątrz katalogu budowania. Dzięki temu pliki wyjściowe nie mieszają się w tym samym katalogu z różnorakimi plikami tymczasowymi.
+	Ustawia domyślny eksport bibliotek dynamicznych oraz plików wykonywalnych do katalogu `bin` wewnątrz katalogu budowania obecnego projektu. Dzięki temu pliki wyjściowe nie mieszają się w tym samym katalogu z różnorakimi plikami tymczasowymi.
 	
 	```cmake
 	add_subdirectory(ext/raylib)
@@ -136,7 +138,7 @@ Jest to hierarchicznie najwyższy katalog, odpowiadający całemu repozytorium. 
 	add_subdirectory(src)
 	```
 	Uruchamia plik CMakeLists.txt, znajdujący się w katalogu `src`. Skonfiguruje on plik wyjściowy tego projektu, który ze względu na kolejność wywołania funkcji będzie następny do zbudowania po bibliotece raylib. Jest to nieco szerzej omówione niżej.
-
+	
 - #### [:page_facing_up: LICENSE](LICENSE)
 	
 	Plik o tej nazwie zawiera warunki licencyjne, które należy spełniać, aby wykorzystywać zawartość repozytorium. Brak zamieszczenia podobnego pliku przez właściciela praw, lub innej jednoznacznej informacji o udzielonej licencji, implikuje zastrzeżenie wszelkich praw, za wyjątkiem tych udzielonych osobno - np. w przypadku publicznych repozytoriów umieszczonych na platformie GitHub, [pewne przywileje są udzielane na mocy samych warunków tej platformy](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service#3-ownership-of-content-right-to-post-and-license-grants).
@@ -164,7 +166,7 @@ Jest to hierarchicznie najwyższy katalog, odpowiadający całemu repozytorium. 
 		```cmake
 		set(TARGET_NAME ${PROJECT_NAME})
 		```
-		Ustawia zmienną `${TARGET_NAME}`, która będzie oznaczała nazwę wyjściowego pliku, na nazwę projektu z ostatniego wywołania `project()`. Dzięki temu, jeżeli zechcemy nadać plikowi wyjściowemu nazwę inną od nazwy projektu (np. celem utworzenia kilku różnych plików wyjściowych), ustawić ją będzie trzeba tylko w jednym miejscu.
+		Ustawia zmienną `${TARGET_NAME}`, która będzie oznaczała nazwę wyjściowego pliku, na nazwę obecnego projektu. Dzięki temu, jeżeli zechcemy nadać plikowi wyjściowemu nazwę inną od nazwy projektu (np. celem utworzenia kilku różnych plików wyjściowych), ustawić ją będzie trzeba tylko w jednym miejscu.
 		
 		```cmake
 		file(GLOB_RECURSE src CONFIGURE_DEPENDS "*.c" "*.cpp" "*.h" "*.hpp")
